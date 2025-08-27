@@ -33,7 +33,7 @@
 		B9487A8F2E5F73B600B43906 /* Exceptions for "CloneTube" folder in "CloneTube" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				App/Resources/Info.plist,
 			);
 			target = B9487A662E5F73B500B43906 /* CloneTube */;
 		};

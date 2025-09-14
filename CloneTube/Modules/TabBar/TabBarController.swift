@@ -1,5 +1,5 @@
 //
-//  TapBarController.swift
+//  TabBarController.swift
 //  CloneTube
 //
 //  Created by George Partskhaladze on 27.08.25.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class TapBarController: UITabBarController {
+class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let homeVC = UINavigationController(rootViewController: EmptyViewController())
+        let homeVC = UINavigationController(rootViewController: HomeViewController())
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: ImageAssets.homeFilled.rawValue), tag: 0)
         
         let shortsVS = UINavigationController(rootViewController: EmptyViewController())

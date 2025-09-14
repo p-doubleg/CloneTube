@@ -11,4 +11,10 @@ enum ImageAssets: String {
     case libraryOutline = "library_outline"
     case shortsOutline = "shorts_outline"
     case subscriptionOutline = "subscription_outline"
+    
+    case youtubeLogo = "youtube_logo"
+    case castIcon = "cast_icon"
+    case notificationIcon = "notification_icon"
+    case searchIcon = "search_icon"
+    case profileIcon = "profile_icon"
 }

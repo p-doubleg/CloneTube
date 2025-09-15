@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        let tabBarController = TabBarController()
-        window.rootViewController = tabBarController
+        let tabBar = createTabBar()
+        window.rootViewController = tabBar
         self.window = window
         window.makeKeyAndVisible()
     }
@@ -56,3 +56,46 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    private func createTabBar() -> UITabBarController {
+        let tabBar = UITabBarController()
+        tabBar.viewControllers = [
+            createHomeNC(),
+            createShortsNC(),
+            createAddVideoNC(),
+            createSubscriptionsNC(),
+            createLibraryNC()
+        ]
+        return tabBar
+    }
+    
+    private func createHomeNC() -> UINavigationController {
+        let homeVC = HomeViewController()
+        homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: ImageAssets.homeFilled.rawValue), tag: 0)
+        return UINavigationController(rootViewController: homeVC)
+    }
+    
+    private func createShortsNC() -> UINavigationController {
+        let shortsVS = EmptyViewController()
+        shortsVS.tabBarItem = UITabBarItem(title: "Shorts", image: UIImage(named: ImageAssets.shortsOutline.rawValue), tag: 1)
+        return UINavigationController(rootViewController: shortsVS)
+    }
+    
+    private func createAddVideoNC() -> UINavigationController {
+        let addVideoVC = EmptyViewController()
+        addVideoVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: ImageAssets.addVideoOutline.rawValue), tag: 2)
+        return UINavigationController(rootViewController: addVideoVC)
+    }
+    
+    private func createSubscriptionsNC() -> UINavigationController {
+        let subscriptionsVC = EmptyViewController()
+        subscriptionsVC.tabBarItem = UITabBarItem(title: "Subscriptions", image: UIImage(named: ImageAssets.subscriptionOutline.rawValue), tag: 3)
+        return UINavigationController(rootViewController: subscriptionsVC)
+    }
+    
+    private func createLibraryNC() -> UINavigationController {
+        let libraryVC = EmptyViewController()
+        libraryVC.tabBarItem = UITabBarItem(title: "Library", image: UIImage(named: ImageAssets.libraryOutline.rawValue), tag: 4)
+        return UINavigationController(rootViewController: libraryVC)
+    }
+}

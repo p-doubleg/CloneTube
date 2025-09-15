@@ -9,16 +9,18 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    private let topBarView: TopBarView = {
-        let view = TopBarView()
-        return view
-    }()
+    private let topBarView = TopBarView()
     
-    private let topBarHeight: CGFloat = 44
+    private let topBarHeight: CGFloat = 28
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
     
     override func viewDidLayoutSubviews() {

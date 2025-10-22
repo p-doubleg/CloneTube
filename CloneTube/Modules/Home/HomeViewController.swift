@@ -7,11 +7,10 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     private let topBarView = TopBarView()
-    
-    private let topBarHeight: CGFloat = 28
+    private let topBarContentHeight: CGFloat = 28
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,32 +34,19 @@ class HomeViewController: UIViewController {
     }
     
     private func layoutTopBar() {
-        let viewWidth = view.bounds.width
-        let safeAreaTop = view.safeAreaInsets.top
-        
+        let safeTop = view.safeAreaInsets.top
         topBarView.frame = CGRect(
             x: 0,
             y: 0,
-            width: viewWidth,
-            height: topBarHeight + safeAreaTop
+            width: view.bounds.width,
+            height: topBarContentHeight + safeTop
         )
     }
 }
 
 extension HomeViewController: TopBarViewDelegate {
-    func castButtonTapped() {
-        print("Cast button tapped")
-    }
-    
-    func notificationButtonTapped() {
-        print("Notification button tapped")
-    }
-    
-    func searchButtonTapped() {
-        print("Search button tapped")
-    }
-    
-    func profileButtonTapped() {
-        print("Profile button tapped")
-    }
+    func castButtonTapped() { print("Cast button tapped") }
+    func notificationButtonTapped() { print("Notification button tapped") }
+    func searchButtonTapped() { print("Search button tapped") }
+    func profileButtonTapped() { print("Profile button tapped") }
 }

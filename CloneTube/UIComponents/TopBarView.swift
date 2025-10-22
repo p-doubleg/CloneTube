@@ -14,9 +14,16 @@ protocol TopBarViewDelegate: AnyObject {
     func profileButtonTapped()
 }
 
-class TopBarView: UIView {
+final class TopBarView: UIView {
     
     weak var delegate: TopBarViewDelegate?
+    
+    private struct Layout {
+        static let buttonSize: CGFloat = 24
+        static let padding: CGFloat = 12
+        static let logoSize = CGSize(width: 92, height: 22)
+    }
+    
     private let youtubeLogo: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: ImageAssets.youtubeLogo.rawValue)
@@ -24,43 +31,12 @@ class TopBarView: UIView {
         return imageView
     }()
     
-    private let castButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: ImageAssets.castIcon.rawValue), for: .normal)
-        button.tintColor = .label
-        button.isUserInteractionEnabled = true
-        return button
-    }()
+    private lazy var castButton = makeButton(image: ImageAssets.castIcon.rawValue, action: #selector(castButtonTapped))
+    private lazy var notificationButton = makeButton(image: ImageAssets.notificationIcon.rawValue, action: #selector(notificationButtonTapped))
+    private lazy var searchButton = makeButton(image: ImageAssets.searchIcon.rawValue, action: #selector(searchButtonTapped))
+    private lazy var profileButton = makeButton(image: ImageAssets.profileIcon.rawValue, action: #selector(profileButtonTapped))
     
-    private let notificationButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: ImageAssets.notificationIcon.rawValue), for: .normal)
-        button.tintColor = .label
-        button.isUserInteractionEnabled = true
-        return button
-    }()
-    
-    private let searchButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: ImageAssets.searchIcon.rawValue), for: .normal)
-        button.tintColor = .label
-        button.isUserInteractionEnabled = true
-        return button
-    }()
-    
-    private let profileButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: ImageAssets.profileIcon.rawValue), for: .normal)
-        button.tintColor = .label
-        button.isUserInteractionEnabled = true
-        return button
-    }()
-    
-    private let buttonSize: CGFloat = 32
-    private let horizontalPadding: CGFloat = 16
-    private let buttonSpacing: CGFloat = 16
-    private let logoHeight: CGFloat = 24
-    private let logoMaxWidth: CGFloat = 120
+    private lazy var rightButtons: [UIButton] = [castButton, notificationButton, searchButton, profileButton]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,8 +44,7 @@ class TopBarView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupUI()
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupUI() {
@@ -77,83 +52,49 @@ class TopBarView: UIView {
         isUserInteractionEnabled = true
         
         addSubview(youtubeLogo)
-        addSubview(castButton)
-        addSubview(notificationButton)
-        addSubview(searchButton)
-        addSubview(profileButton)
-        castButton.addTarget(self, action: #selector(castButtonTapped), for: .touchUpInside)
-        notificationButton.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
-        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
-        profileButton.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+        rightButtons.forEach(addSubview)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        guard bounds.width > 0 && bounds.height > 0 else { return }
         layoutComponents()
     }
     
-    private func layoutComponents() {
-        let viewHeight = bounds.height
-        let viewWidth = bounds.width
-        let safeAreaTop = safeAreaInsets.top
-        let centerY = safeAreaTop + (viewHeight - safeAreaTop) / 2
-        let rightEdge = viewWidth - horizontalPadding
+}
+
+private extension TopBarView {
+    func layoutComponents() {
+        let safeTop = safeAreaInsets.top
+        let y = safeTop + Layout.padding
+        let buttonSize = Layout.buttonSize
+        let padding = Layout.padding
         
-        profileButton.frame = CGRect(
-            x: rightEdge - buttonSize,
-            y: centerY - (buttonSize / 2),
-            width: buttonSize,
-            height: buttonSize
-        )
-        
-        searchButton.frame = CGRect(
-            x: profileButton.frame.minX - buttonSize - buttonSpacing,
-            y: centerY - (buttonSize / 2),
-            width: buttonSize,
-            height: buttonSize
-        )
-        
-        notificationButton.frame = CGRect(
-            x: searchButton.frame.minX - buttonSize - buttonSpacing,
-            y: centerY - (buttonSize / 2),
-            width: buttonSize,
-            height: buttonSize
-        )
-        
-        castButton.frame = CGRect(
-            x: notificationButton.frame.minX - buttonSize - buttonSpacing,
-            y: centerY - (buttonSize / 2),
-            width: buttonSize,
-            height: buttonSize
-        )
-        
-        let logoWidth = min(logoMaxWidth, castButton.frame.minX - (horizontalPadding * 2))
         youtubeLogo.frame = CGRect(
-            x: horizontalPadding,
-            y: centerY - (logoHeight / 2),
-            width: logoWidth,
-            height: logoHeight
+            x: padding,
+            y: y,
+            width: Layout.logoSize.width,
+            height: Layout.logoSize.height
         )
+        
+        var currentX = bounds.maxX - padding - buttonSize
+        for button in rightButtons.reversed() {
+            button.frame = CGRect(x: currentX, y: y, width: buttonSize, height: buttonSize)
+            currentX -= (buttonSize + padding)
+        }
     }
     
-    @objc private func castButtonTapped() {
-        print("TopBarView: Cast button tapped!")
-        delegate?.castButtonTapped()
+    func makeButton(image: String, action: Selector) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: image), for: .normal)
+        button.tintColor = .label
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
     }
-    
-    @objc private func notificationButtonTapped() {
-        print("TopBarView: Notification button tapped!")
-        delegate?.notificationButtonTapped()
-    }
-    
-    @objc private func searchButtonTapped() {
-        print("TopBarView: Search button tapped!")
-        delegate?.searchButtonTapped()
-    }
-    
-    @objc private func profileButtonTapped() {
-        print("TopBarView: Profile button tapped!")
-        delegate?.profileButtonTapped()
-    }
+}
+
+private extension TopBarView {
+    @objc private func castButtonTapped() { delegate?.castButtonTapped() }
+    @objc private func notificationButtonTapped() { delegate?.notificationButtonTapped() }
+    @objc private func searchButtonTapped() { delegate?.searchButtonTapped() }
+    @objc private func profileButtonTapped() { delegate?.profileButtonTapped() }
 }

@@ -7,10 +7,13 @@
 
 enum ImageAssets: String {
     case addVideoOutline = "addVideo_outline"
+    case homeOutline = "home_outline"
     case homeFilled = "home_filled"
     case libraryOutline = "library_outline"
+    case libraryFilled = "library_filled"
     case shortsOutline = "shorts_outline"
     case subscriptionOutline = "subscription_outline"
+    case subscriptionFilled = "subscription_filled"
     
     case youtubeLogo = "youtube_logo"
     case castIcon = "cast_icon"

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Video {
+struct Video: Hashable {
     let id: String
     let title: String
     let description: String

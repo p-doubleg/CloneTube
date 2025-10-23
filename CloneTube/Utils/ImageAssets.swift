@@ -20,4 +20,9 @@ enum ImageAssets: String {
     case notificationIcon = "notification_icon"
     case searchIcon = "search_icon"
     case profileIcon = "profile_icon"
+    
+    case more = "more"
+    
+    case tumbnailPlaceholder = "tumbnail_placeholder"
+    case profilePlaceholder = "profile_placeholder"
 }

@@ -5,7 +5,7 @@
 //  Created by George Partskhaladze on 23.10.25.
 //
 
-struct Channel {
+struct Channel: Hashable {
     let id: String
     let name: String
     let avatarURL: String

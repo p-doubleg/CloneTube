@@ -7,6 +7,8 @@
 
 final class MockNetworkService: NetworkServicing {
     
+    static let shared = MockNetworkService()
+    
     func fetchVideos() async throws -> [Video] {
         try await Task.sleep(nanoseconds: 500_000_000)
         

@@ -151,10 +151,10 @@ private extension HomeViewController {
 
 private extension HomeViewController {
     
-    func loadVideos() {
+    func loadVideos(_ filter: VideoCategory = .all) {
         Task {
             do {
-                videos = try await MockNetworkService.shared.fetchVideos()
+                videos = try await MockNetworkService.shared.fetchVideos(filter)
                 applySnapshot()
             } catch {
                 print("Error:", error)
@@ -178,7 +178,7 @@ extension HomeViewController: VideoCellDelegate {
 
 extension HomeViewController: FiltersScrollViewDelegate {
     func onFilterSelected(_ filter: VideoCategory) {
-        print("Filter button tapped")
+        loadVideos(filter)
     }
 }
 

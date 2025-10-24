@@ -6,5 +6,5 @@
 //
 
 protocol NetworkServicing {
-    func fetchVideos() async throws -> [Video]
+    func fetchVideos(_ category: VideoCategory) async throws -> [Video]
 }

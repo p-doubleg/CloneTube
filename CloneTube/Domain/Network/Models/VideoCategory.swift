@@ -6,6 +6,7 @@
 //
 
 enum VideoCategory: String, CaseIterable, Hashable {
+    case all = "All"
     case gaming = "Gaming"
     case music = "Music"
     case news = "News"

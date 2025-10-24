@@ -15,9 +15,11 @@ final class HomeViewController: UIViewController {
     
     private enum Layout {
         static let topBarContentHeight: CGFloat = 28
+        static let filtersContentHeight: CGFloat = 34
         static let topBarVerticalPadding: CGFloat = 12
         static let thumbnailAspectRatio: CGFloat = 16.0 / 9.0
         static let cellBottomContentHeight: CGFloat = 88
+        static let dividerWidth: CGFloat = 1
     }
     
     private var videos: [Video] = []
@@ -26,6 +28,19 @@ final class HomeViewController: UIViewController {
     private lazy var topBarView: TopBarView = {
         let view = TopBarView()
         view.delegate = self
+        return view
+    }()
+    
+    private lazy var dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray5
+        return view
+    }()
+    
+    private lazy var filtersView: FiltersScrollView = {
+        let view = FiltersScrollView()
+        view.delegate = self
+        view.configure(with: VideoCategory.allCases)
         return view
     }()
     
@@ -69,6 +84,8 @@ private extension HomeViewController {
     func setupView() {
         view.backgroundColor = .systemBackground
         view.addSubview(topBarView)
+        view.addSubview(dividerView)
+        view.addSubview(filtersView)
         view.addSubview(videosCollectionView)
     }
     
@@ -80,11 +97,25 @@ private extension HomeViewController {
             height: view.safeAreaInsets.top + Layout.topBarContentHeight + Layout.topBarVerticalPadding * 2
         )
         
-        videosCollectionView.frame = CGRect(
+        dividerView.frame = CGRect(
             x: 0,
             y: topBarView.frame.maxY,
             width: view.bounds.width,
-            height: view.bounds.height - topBarView.frame.maxY
+            height: Layout.dividerWidth
+        )
+        
+        filtersView.frame = CGRect(
+            x: 0,
+            y: dividerView.frame.maxY,
+            width: view.bounds.width,
+            height: Layout.filtersContentHeight + Layout.topBarVerticalPadding * 2
+        )
+        
+        videosCollectionView.frame = CGRect(
+            x: 0,
+            y: filtersView.frame.maxY,
+            width: view.bounds.width,
+            height: view.bounds.height - filtersView.frame.maxY
         )
     }
 }
@@ -144,3 +175,10 @@ extension HomeViewController: VideoCellDelegate {
         print("More button tapped in cell")
     }
 }
+
+extension HomeViewController: FiltersScrollViewDelegate {
+    func onFilterSelected(_ filter: VideoCategory) {
+        print("Filter button tapped")
+    }
+}
+

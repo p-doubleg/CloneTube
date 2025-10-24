@@ -21,7 +21,7 @@ final class HomeViewController: UIViewController {
     }
     
     private var videos: [Video] = []
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Video>?
+    private var videosCollectionDataSource: UICollectionViewDiffableDataSource<Section, Video>?
     
     private lazy var topBarView: TopBarView = {
         let view = TopBarView()
@@ -29,7 +29,7 @@ final class HomeViewController: UIViewController {
         return view
     }()
     
-    private lazy var collectionView: UICollectionView = {
+    private lazy var videosCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 0
@@ -69,7 +69,7 @@ private extension HomeViewController {
     func setupView() {
         view.backgroundColor = .systemBackground
         view.addSubview(topBarView)
-        view.addSubview(collectionView)
+        view.addSubview(videosCollectionView)
     }
     
     func layoutUI() {
@@ -80,7 +80,7 @@ private extension HomeViewController {
             height: view.safeAreaInsets.top + Layout.topBarContentHeight + Layout.topBarVerticalPadding * 2
         )
         
-        collectionView.frame = CGRect(
+        videosCollectionView.frame = CGRect(
             x: 0,
             y: topBarView.frame.maxY,
             width: view.bounds.width,
@@ -92,8 +92,8 @@ private extension HomeViewController {
 private extension HomeViewController {
     
     func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, Video>(
-            collectionView: collectionView
+        videosCollectionDataSource = UICollectionViewDiffableDataSource<Section, Video>(
+            collectionView: videosCollectionView
         ) { collectionView, indexPath, video in
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: VideoCell.reuseID,
@@ -107,14 +107,14 @@ private extension HomeViewController {
             return cell
         }
         
-        collectionView.dataSource = dataSource
+        videosCollectionView.dataSource = videosCollectionDataSource
     }
     
     func applySnapshot(animatingDifferences: Bool = true) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Video>()
         snapshot.appendSections([.main])
         snapshot.appendItems(videos)
-        dataSource?.apply(snapshot, animatingDifferences: animatingDifferences)
+        videosCollectionDataSource?.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 }
 

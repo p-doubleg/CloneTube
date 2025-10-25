@@ -23,6 +23,7 @@ enum ImageAssets: String {
     
     case more = "more"
     
-    case tumbnailPlaceholder = "tumbnail_placeholder"
+    case shortsTumbnailPlaceholder = "shorts_tumbnail_placeholder"
+    case videoTumbnailPlaceholder = "video_tumbnail_placeholder"
     case profilePlaceholder = "profile_placeholder"
 }

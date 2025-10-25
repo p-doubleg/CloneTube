@@ -16,7 +16,7 @@ final class VideoCell: UICollectionViewCell {
     static let reuseID = "VideoCell"
     weak var delegate: VideoCellDelegate?
     
-    private let thumbnailImageView = ThumbnailImageView(frame: .zero)
+    private let thumbnailImageView = VideoThumbnailImageView(frame: .zero)
     private let profileImageView = ProfileImageView(frame: .zero)
     private let titleLabel = UILabel()
     private let viewsLabel = UILabel()

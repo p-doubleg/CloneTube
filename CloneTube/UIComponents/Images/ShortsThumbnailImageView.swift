@@ -1,5 +1,5 @@
 //
-//  ThumbnailImageView.swift
+//  ShortsThumbnailImageView.swift
 //  CloneTube
 //
 //  Created by George Partskhaladze on 23.10.25.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ThumbnailImageView: UIImageView {
+class ShortsThumbnailImageView: UIImageView {
     
-    let placeholderImage = UIImage(named: ImageAssets.tumbnailPlaceholder.rawValue)
+    let placeholderImage = UIImage(named: ImageAssets.shortsTumbnailPlaceholder.rawValue)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -86,7 +86,7 @@ private extension VideoCell {
     }
     
     func setupMoreButton() {
-        moreButton.setImage(UIImage(named: ImageAssets.more.rawValue), for: .normal)
+        moreButton.setImage(UIImage(named: ImageAssets.moreVertcal.rawValue), for: .normal)
         moreButton.tintColor = .secondaryLabel
         moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
     }

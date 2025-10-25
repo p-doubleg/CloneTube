@@ -47,4 +47,33 @@ struct Video: Hashable {
             return "\(days) d ago"
         }
     }
+    
+    var formattedLikeCount: String {
+        formatCount(likeCount)
+    }
+    
+    var formattedCommentCount: String {
+        formatCount(commentCount)
+    }
+    
+    
+    private func formatCount(_ count: Int) -> String {
+        switch count {
+        case 1_000_000...:
+            return formatNumber(Double(count) / 1_000_000, suffix: "M")
+        case 1_000...:
+            return formatNumber(Double(count) / 1_000, suffix: "K")
+        default:
+            return "\(count)"
+        }
+    }
+    
+    private func formatNumber(_ value: Double, suffix: String) -> String {
+        let rounded = (value * 10).rounded() / 10
+        if rounded.truncatingRemainder(dividingBy: 1) == 0 {
+            return "\(Int(rounded))\(suffix)"
+        } else {
+            return "\(rounded)\(suffix)"
+        }
+    }
 }

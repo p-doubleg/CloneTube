@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FilterButtonView: UIButton {
+final class FilterButton: UIButton {
     
     let filter: VideoCategory
     
@@ -32,7 +32,7 @@ final class FilterButtonView: UIButton {
     
 }
 
-private extension FilterButtonView {
+private extension FilterButton {
     
     func setupUI() {
         var config = UIButton.Configuration.plain()

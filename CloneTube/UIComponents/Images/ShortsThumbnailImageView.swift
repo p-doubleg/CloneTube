@@ -23,6 +23,7 @@ class ShortsThumbnailImageView: UIImageView {
     private func configure() {
         clipsToBounds = true
         image = placeholderImage
+        isUserInteractionEnabled = true
     }
     
 }

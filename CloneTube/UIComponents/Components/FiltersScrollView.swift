@@ -14,8 +14,8 @@ protocol FiltersScrollViewDelegate: AnyObject {
 final class FiltersScrollView: UIView {
     
     private let scrollView = UIScrollView()
-    private var buttons: [FilterButtonView] = []
-    private var selectedButton: FilterButtonView?
+    private var buttons: [FilterButton] = []
+    private var selectedButton: FilterButton?
     
     weak var delegate: FiltersScrollViewDelegate?
     
@@ -38,7 +38,7 @@ final class FiltersScrollView: UIView {
         buttons.removeAll()
         
         filters.forEach { category in
-            let button = FilterButtonView(filter: category)
+            let button = FilterButton(filter: category)
             button.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
             
             scrollView.addSubview(button)
@@ -88,13 +88,13 @@ private extension FiltersScrollView {
 
 private extension FiltersScrollView {
     
-    @objc func filterButtonTapped(_ sender: FilterButtonView) {
+    @objc func filterButtonTapped(_ sender: FilterButton) {
         guard sender !== selectedButton else { return }
         updateSelection(for: sender)
         delegate?.onFilterSelected(sender.filter)
     }
     
-    func updateSelection(for newSelectedButton: FilterButtonView) {
+    func updateSelection(for newSelectedButton: FilterButton) {
         selectedButton?.isSelected = false
         newSelectedButton.isSelected = true
         selectedButton = newSelectedButton

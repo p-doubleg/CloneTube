@@ -61,6 +61,8 @@ enum TabBarItem: CaseIterable {
         switch self{
         case .home:
             return HomeViewController()
+        case .shorts:
+            return ShortsViewController()
         default:
             return EmptyViewController()
         }
